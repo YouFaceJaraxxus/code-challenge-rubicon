@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { IGetAllMoviesResponse } from "../../service/interfaces/movieService";
-import { axiosBaseQuery } from "./axiosBaseQuery";
+import { axiosBaseQuery } from "../../shared/api/axiosBaseQuery";
 import { config } from "../../config";
 
 export const moviesApi = createApi({
