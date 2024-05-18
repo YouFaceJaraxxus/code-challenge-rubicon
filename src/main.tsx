@@ -8,7 +8,7 @@ import PageLoadingIndicator from "./ui/spinners/PageLoadingIndicator/PageLoading
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "*",
     element: <App />,
     children: routes.map(({ path, Page }) => ({
       path,
