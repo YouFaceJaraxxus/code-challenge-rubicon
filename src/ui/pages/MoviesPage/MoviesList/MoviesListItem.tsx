@@ -13,8 +13,6 @@ const MoviesListItem = ({ movie, type }: MoviesListItemProps) => {
 
 
   const navigateToMovieDetails = useCallback(() => {
-    console.log("movie", movie);
-    console.log("type", type);
     navigate(
       `/${ApplicationRoute.MOVIES}/${ApplicationRoute.DETAILS}/${type}/${movie.id}`
     );
