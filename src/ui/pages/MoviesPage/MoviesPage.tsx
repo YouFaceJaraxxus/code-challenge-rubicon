@@ -1,5 +1,10 @@
+import { Link } from "react-router-dom";
+
 const MoviesPage = () => {
-    return <div>Hello. welcome to movies page.</div>;
+    return <div>
+      <div>MOVIES</div>
+      <Link to="/about">aboot</Link>
+    </div>;
   };
   
 
