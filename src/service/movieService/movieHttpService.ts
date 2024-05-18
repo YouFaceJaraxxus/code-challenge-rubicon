@@ -26,7 +26,7 @@ class MovieHttpService implements IMovieService {
     config?: IMovieServiceConfig
   ): Promise<IGetAllMoviesResponse> => {
     const response: IGetAllMoviesResponse = await this.service
-      .get("/movie/popular?language=en-US&page=1", config)
+      .get("/movie/popular?language=en-US", config)
       .then((response) => response.data);
     return response;
   };

@@ -1,24 +1,13 @@
-import axios, { AxiosError, AxiosHeaders } from "axios";
+import axios, { AxiosError } from "axios";
 import { config } from "../../config";
+import { IAxiosBaseQuery } from "../types/api";
 
 export const axiosBaseQuery =
-  ({ baseUrl } = { baseUrl: "" }) =>
-  async ({
-    url,
-    method,
-    data,
-    params,
-    headers,
-  }: {
-    url: string;
-    method: string;
-    data?: any;
-    params?: string[];
-    headers?: AxiosHeaders;
-  }) => {
+  <T>(baseUrl: string) =>
+  async ({ url, method, data, params, headers }: IAxiosBaseQuery<T>) => {
     try {
       const axiosInstance = axios.create({
-        baseURL: config.tMDBApiBaseURL,
+        baseURL: baseUrl,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${config.tMDBApiReadAccessToken}`,
@@ -26,7 +15,7 @@ export const axiosBaseQuery =
         },
       });
       const result = await axiosInstance({
-        url: baseUrl + url,
+        url: `${baseUrl}/${url}`,
         method,
         data,
         params,
