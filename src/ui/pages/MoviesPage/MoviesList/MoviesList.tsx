@@ -1,11 +1,12 @@
 import {
-  useGetPopularMoviesQuery,
-  useSearchAllMoviesQuery,
+    useGetPopularMoviesQuery,
+    useSearchAllMoviesQuery,
 } from "../../../../redux/api/moviesApi";
 import { useAppSelector } from "../../../../redux/store/hooks";
 import { selectMovies } from "../../../../redux/store/store";
 import { MINIMUM_SEARCH_LENGTH } from "../../../../shared/constants/movie";
 import { Movie } from "../../../../shared/types/movie";
+import MoviesListItem from "./MoviesListItem";
 
 const MoviesList = () => {
   const { moviesSearch, moviesType } = useAppSelector(selectMovies);
@@ -32,23 +33,11 @@ const MoviesList = () => {
       <div style={{ display: "flex", flexDirection: "column" }}>
         {shouldShowSearchedMovies &&
           searchedMovies?.results?.map((movie: Movie) => (
-            <div
-              key={movie.id}
-              style={{ display: "flex", gap: "10px", flexDirection: "row" }}
-            >
-              <b>{movie.id}</b>
-              <span>{movie.title ?? movie.name}</span>
-            </div>
+            <MoviesListItem movie={movie} type={moviesType} />
           ))}
         {!shouldShowSearchedMovies &&
           popularMovies?.results?.map((movie: Movie) => (
-            <div
-              key={movie.id}
-              style={{ display: "flex", gap: "10px", flexDirection: "row" }}
-            >
-              <b>{movie.id}</b>
-              <span>{movie.title ?? movie.name}</span>
-            </div>
+            <MoviesListItem movie={movie} type={moviesType} />
           ))}
       </div>
     </div>

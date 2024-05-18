@@ -2,7 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { IGetAllMoviesResponse } from "../../service/interfaces/movieService";
 import { axiosBaseQuery } from "../../shared/api/axiosBaseQuery";
 import { config } from "../../config";
-import { MovieType } from "../../shared/types/movie";
+import { Movie, MovieType } from "../../shared/types/movie";
 
 type SearchAllMoviesQueryParams = {
   page: number;
@@ -21,6 +21,12 @@ type GetPopularMoviesParams = {
 
 type GetPopularMoviesQueryParams = {
   page: number;
+};
+
+
+type GetMovieDetailsParams = {
+  type: MovieType;
+  id: string;
 };
 
 export const moviesApi = createApi({
@@ -47,13 +53,26 @@ export const moviesApi = createApi({
       query: (params: GetPopularMoviesParams) => {
         const { type, queryParams } = params;
         return {
-          url: `${type}/popular?language=en-US`,
+          url: `${type}/popular?include_adult=falselanguage=en-US`,
           method: "get",
           params: queryParams,
+        };
+      },
+    }),
+
+    getMovieDetails: builder.query<
+      Movie,
+      GetMovieDetailsParams
+    >({
+      query: (params: GetMovieDetailsParams) => {
+        const { type, id } = params;
+        return {
+          url: `${type}/${id}?include_adult=false&language=en-US`,
+          method: "get",
         };
       },
     }),
   }),
 });
 
-export const { useSearchAllMoviesQuery, useGetPopularMoviesQuery } = moviesApi;
+export const { useSearchAllMoviesQuery, useGetPopularMoviesQuery, useGetMovieDetailsQuery } = moviesApi;

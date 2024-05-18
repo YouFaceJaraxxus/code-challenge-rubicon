@@ -11,6 +11,10 @@ export const routes = [
         path: ApplicationRoute.MOVIES,
     },
     {
+        Page: lazy(() => import("../../ui/pages/MovieDetailsPage/MovieDetailsPage")),
+        path: `${ApplicationRoute.MOVIES}/${ApplicationRoute.DETAILS}/:type/:id`,
+    },
+    {
         Page: lazy(() => import("../../ui/pages/HomePage/HomePage")),
         path: "*",
     },
