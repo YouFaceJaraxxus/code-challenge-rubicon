@@ -1,7 +1,10 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { movieHttpService as movieService } from '../../service/documentService/movieHttpService';
-import { IGetAllMoviesResponse, IMovieServiceConfig } from '../../service/interfaces/movieService';
-import { Movie } from '../../shared/types/movie';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { movieHttpService as movieService } from "../../service/documentService/movieHttpService";
+import {
+  IGetAllMoviesResponse,
+  IMovieServiceConfig,
+} from "../../service/interfaces/movieService";
+import { Movie } from "../../shared/types/movie";
 
 interface MoviesState {
   movies: Movie[] | null;
@@ -20,25 +23,23 @@ const initialState: MoviesState = {
 };
 
 export const getMoviesAsync = createAsyncThunk(
-  'movies/getMovies',
+  "movies/getMovies",
   async (config?: IMovieServiceConfig): Promise<IGetAllMoviesResponse> => {
     const response = await movieService.getAllMovies(config);
     return response;
-  },
+  }
 );
 
 export const getMovieByIdAsync = createAsyncThunk(
-  'movies/getMovieById',
+  "movies/getMovieById",
   async (id: string): Promise<Movie | null> => {
     const response = await movieService.getMovieById(id);
     return response;
-  },
+  }
 );
 
-
-
 const moviesSlice = createSlice({
-  name: 'movies',
+  name: "movies",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -47,14 +48,13 @@ const moviesSlice = createSlice({
         state.fetchingMovies = true;
       })
       .addCase(getMoviesAsync.fulfilled, (state, action) => {
-        state.movies = action.payload.movies;
-        state.count = action.payload.count;
+        state.movies = action.payload.results;
+        state.count = action.payload.total_results;
         state.fetchingMovies = false;
       })
       .addCase(getMoviesAsync.rejected, (state) => {
         state.fetchingMovies = false;
       })
-
 
       .addCase(getMovieByIdAsync.pending, (state) => {
         state.fetchingMovieById = true;
@@ -65,8 +65,7 @@ const moviesSlice = createSlice({
       })
       .addCase(getMovieByIdAsync.rejected, (state) => {
         state.fetchingMovieById = false;
-      })
-
+      });
   },
 });
 

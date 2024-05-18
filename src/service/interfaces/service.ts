@@ -10,6 +10,7 @@ interface IServiceConfig {
 interface IAxiosServiceConfig extends IServiceConfig {
   axiosConfig?: AxiosRequestConfig;
 }
+
 interface IAxiosService {
   baseUrl?: string;
   get: (path: string, config?: IAxiosServiceConfig) => Promise<AxiosResponse<any>>;
